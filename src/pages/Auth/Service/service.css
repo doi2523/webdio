@@ -1,0 +1,33 @@
+/* styles.css hoặc file CSS tùy chỉnh của bạn */
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.hot-trend-animation {
+  animation: blink 1s ease-in-out 0s 5; /* Chạy animation 5 lần trong 1 giây mỗi lần */
+}
+@keyframes point {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+}
+
+.pointing-animation {
+  animation: point 0.5s infinite;
+}
+.block-icon{
+  margin-top: 90px;
+  margin-left: 90px;
+}

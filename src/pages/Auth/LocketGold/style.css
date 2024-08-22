@@ -1,0 +1,22 @@
+.banner-marquee {
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .banner-marquee h1 {
+    display: inline-block; /* Đảm bảo chữ không bị chia dòng */
+    white-space: nowrap; /* Chữ không bị xuống dòng */
+    position: absolute;
+    width: 100%;
+    animation: marquee 12s linear infinite;
+  }
+  
+  @keyframes marquee {
+    0% {
+      transform: translateX(120%);
+    }
+    100% {
+      transform: translateX(-120%);
+    }
+  }
+  
