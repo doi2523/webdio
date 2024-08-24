@@ -1,8 +1,9 @@
-// src/Guide.js
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowLeftIcon, ArrowRightIcon, ClipBoardIcon } from "../../../Icons";
 import Swal from "sweetalert2"; // Import SweetAlert2
+import Draggable from "react-draggable";
+import "./styles.css"; // Đảm bảo bạn import tệp CSS vào component
+import Loading from "../../../components/Loading";
 
 // Danh sách các đường link hình ảnh
 const images = [
@@ -27,6 +28,7 @@ const images = [
   "https://firebasestorage.googleapis.com/v0/b/webdio-20ca8.appspot.com/o/images%2FPictureGuide%2F20.jpg?alt=media&token=c385a973-ad42-40d8-9696-a83f843af5a1",
   "https://firebasestorage.googleapis.com/v0/b/webdio-20ca8.appspot.com/o/images%2FPictureGuide%2F21.jpg?alt=media&token=1f2b1bbc-ba38-4fb8-b186-792545c7e50a",
   "https://firebasestorage.googleapis.com/v0/b/webdio-20ca8.appspot.com/o/images%2FPictureGuide%2F22.jpg?alt=media&token=b952d5df-87f2-4e8c-a3d6-13e294e1fc64",
+  "https://firebasestorage.googleapis.com/v0/b/webdio-20ca8.appspot.com/o/images%2FPictureGuide%2F23.PNG?alt=media&token=107b7a94-7b22-4baa-b32d-11e9ecc4221c",
 ];
 
 // Danh sách các tin với giá trị sao chép khác
@@ -34,18 +36,48 @@ const newsItems = [
   { description: "Tài khoản iCloud", copyValue: "activelocketgold@gmail.com" },
   { description: "Mật khẩu", copyValue: "LocketGold2233" },
   {
-    description: "Chứng chỉ 2024",
+    description: "Chứng chỉ Egern 2024",
     copyValue: "https://apptesters.org/egern.yaml",
   },
   {
-    description: "Chứng chỉ 2006",
+    description: "Chứng chỉ Egern 2006",
     copyValue: "https://aqvpn.me/scripts/locket.yaml",
   },
+];
+const instructions = [
+  "Bước 1: Chọn mục <u>Phương tiện mục mua</u>",
+  "Bước 2: Chọn <u>Đăng xuất</u>",
+  "Bước 3: Chọn <u>Không phải</u>",
+  "Bước 4: Nhập <u>tài khoản</u> và <u>mật khẩu</u> bấm <u>tiếp tục</u> để <u>đăng nhập</u>",
+  "Bước 5: Khi đã <u>đăng nhập</u> xong.",
+  "Bước 6: Vào <u>Appstore</u> vào mục <u>ứng dụng</u> hoặc <u>đã mua</u> (tuỳ thiết bị)",
+  "Bước 7: Chọn tài khoản <u>Đôi</u>",
+  "Bước 8: Tìm kiếm và tải app<u> Egern</u>.",
+  "Bước 9: Mở app <u>Egern</u> vào phần <u>Công cụ</u> chọn phần <u>Chứng chỉ</u>.",
+  "Bước 10: Bấm <u>tạo mới chứng chỉ</u>.",
+  "Bước 11: Bấm <u>tạo mới</u>.",
+  "Bước 12: Chọn <u>tải về chứng chỉ</u>.",
+  "Bước 13: Chọn <u>cho phép</u>.",
+  "Bước 14: Quay lại <u>Cài đặt</u> và click vào <u>Đã tải về hồ sơ</u>.",
+  "Bước 15: Thực hiện <u>cài đặt</u>.",
+  "Bước 16: Sau khi <u>cài đặt</u> xong quay lại “<u>Giới thiệu</u>” lướt xuống dưới cùng chọn phần này.",
+  "Bước 17: Tiến hành bật <u>tin cậy</u> và chọn <u>Tiếp tục</u>.",
+  "Bước 18: Quay lại <u>Egern</u> và tiến hành tải <u>chứng chỉ</u> xuống.",
+  "Bước 19: Dán 1 trong 2 <u>đường link</u> dưới và bấm nút <u>Tải</u>.",
+  "Bước 20: Quay lại <u>app Egern</u> mục <u>phân tích</u> bấm <u>Bắt đầu</u>.",
+  "Bước 21: Chọn <u>cho phép cấu hình VPN</u>.",
+  "Bước 22: Đợi 1-2s và mở <u>app Locket</u> tận hưởng <u>Locket Gold</u> nào :3.",
 ];
 
 const Guide = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const img = new Image();
+    img.src = images[0];
+    img.onload = () => setLoading(false);
+  }, []);
   const nextImage = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
   };
@@ -86,7 +118,9 @@ const Guide = () => {
       });
     }
   };
-
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <>
       <div className="relative w-full max-w-md mx-auto bg-gray-800 p-11 shadow-lg">
@@ -108,6 +142,7 @@ const Guide = () => {
             ))}
           </div>
         </div>
+
         <button
           onClick={prevImage}
           className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:shadow-xl focus:outline-none transition-transform duration-150 ease-in-out active:scale-95 active:shadow-inner"
@@ -133,6 +168,16 @@ const Guide = () => {
           ))}
         </div>
       </div>
+
+      <Draggable>
+        <div className="fixed bottom-4 left-4 right-4 p-5 bg-gray-900 text-white rounded-lg shadow-lg cursor-move rainbow-border-effect">
+          <p
+            className="font-bold"
+            dangerouslySetInnerHTML={{ __html: instructions[currentIndex] }}
+          ></p>
+        </div>
+      </Draggable>
+
       <div className="max-w-md mx-auto bg-gray-800 p-4 shadow-lg">
         <h2 className="text-lg font-bold text-white mb-4">
           Danh Sách Thông Tin
@@ -160,7 +205,8 @@ const Guide = () => {
           </div>
         ))}
 
-        <div className="mt-6 text-center text-white my-2"><hr className="mb-2"></hr>
+        <div className="mt-6 text-center text-white my-2">
+          <hr className="mb-2"></hr>
           <p className="text-sm">
             Đoạn văn bản này cung cấp thêm thông tin liên quan đến nội dung trên
             trang. Nếu bạn có bất kỳ câu hỏi nào hoặc cần thêm trợ giúp, vui

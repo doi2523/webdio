@@ -4,7 +4,7 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   signOut,
-} from "../../Firebase/firebase";
+} from "../../../Firebase/firebase";
 import { getDatabase, ref, set } from "firebase/database"; // Import Realtime Database functions
 
 const Signup = () => {

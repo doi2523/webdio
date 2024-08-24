@@ -1,34 +1,38 @@
-import React, { useState } from 'react';
-import { auth, signInWithEmailAndPassword } from '../../Firebase/firebase';
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
+import React, { useState } from "react";
+import { auth, signInWithEmailAndPassword } from "../../../Firebase/firebase";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate(); // Khai báo useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
       // Kiểm tra xem email đã được xác minh chưa
       if (!user.emailVerified) {
-        throw new Error('Vui lòng xác minh email của bạn trước khi đăng nhập.');
+        throw new Error("Vui lòng xác minh email của bạn trước khi đăng nhập.");
       }
 
-      setSuccess('Đăng nhập thành công!');
+      setSuccess("Đăng nhập thành công!");
       const Toast = Swal.mixin({
         toast: true,
-        position: 'top-end',
+        position: "top-end",
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
@@ -38,10 +42,10 @@ const Login = () => {
         },
       });
       Toast.fire({
-        icon: 'success',
-        title: 'Đăng nhập thành công',
+        icon: "success",
+        title: "Đăng nhập thành công",
       });
-      navigate('/auth/'); // Chuyển hướng sau khi đăng nhập thành công
+      navigate("/auth/"); // Chuyển hướng sau khi đăng nhập thành công
     } catch (error) {
       setError(error.message);
     }
@@ -50,8 +54,15 @@ const Login = () => {
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
+        <a
+          href="#"
+          className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+        >
+          <img
+            className="w-8 h-8 mr-2"
+            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+            alt="logo"
+          />
           WEBDIO
         </a>
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
@@ -63,7 +74,12 @@ const Login = () => {
               {error && <p className="text-red-500">{error}</p>}
               {success && <p className="text-green-500">{success}</p>}
               <div>
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email của bạn</label>
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Email của bạn
+                </label>
                 <input
                   type="email"
                   name="email"
@@ -76,7 +92,12 @@ const Login = () => {
                 />
               </div>
               <div>
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mật khẩu</label>
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Mật khẩu
+                </label>
                 <input
                   type="password"
                   name="password"
@@ -101,10 +122,20 @@ const Login = () => {
                     />
                   </div>
                   <div className="ml-3 text-sm">
-                    <label htmlFor="remember" className="text-gray-500 dark:text-gray-300">Nhớ tôi</label>
+                    <label
+                      htmlFor="remember"
+                      className="text-gray-500 dark:text-gray-300"
+                    >
+                      Nhớ tôi
+                    </label>
                   </div>
                 </div>
-                <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Quên mật khẩu?</a>
+                <a
+                  href="#"
+                  className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
+                >
+                  Quên mật khẩu?
+                </a>
               </div>
               <button
                 type="submit"
@@ -113,7 +144,13 @@ const Login = () => {
                 Đăng nhập
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Chưa có tài khoản? <a href="/get-started" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Đăng ký ngay</a>
+                Chưa có tài khoản?{" "}
+                <a
+                  href="/get-started"
+                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                >
+                  Đăng ký ngay
+                </a>
               </p>
             </form>
           </div>

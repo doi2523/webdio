@@ -13,7 +13,7 @@ const Header = () => {
 
   return (
     <header>
-      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 border-b">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <Link to="/" className="flex items-center">
             <img
@@ -43,7 +43,7 @@ const Header = () => {
               className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               aria-controls="mobile-menu"
               aria-expanded={openMobileMenu}
-              onClick={() => setOpenMobileMenu(prev => !prev)}
+              onClick={() => setOpenMobileMenu((prev) => !prev)}
             >
               <span className="sr-only">Open main menu</span>
               <svg
@@ -83,7 +83,9 @@ const Header = () => {
                 <Link
                   to="/"
                   className={`block py-2 pr-4 pl-3 rounded lg:p-0 ${
-                    location.pathname === "/" ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700" : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
+                    location.pathname === "/"
+                      ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
+                      : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
                   }`}
                   aria-current={location.pathname === "/" ? "page" : undefined}
                 >
@@ -92,29 +94,35 @@ const Header = () => {
               </li>
               <li>
                 <Link
-                  to="/company"
+                  to="/about"
                   className={`block py-2 pr-4 pl-3 rounded lg:p-0 ${
-                    location.pathname === "/company" ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700" : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
+                    location.pathname === "/about"
+                      ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
+                      : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
                   }`}
                 >
-                  Company
+                  About
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/marketplace"
+                  to="/services"
                   className={`block py-2 pr-4 pl-3 rounded lg:p-0 ${
-                    location.pathname === "/marketplace" ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700" : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
+                    location.pathname === "/services"
+                      ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
+                      : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
                   }`}
                 >
-                  Marketplace
+                  Service
                 </Link>
               </li>
               <li>
                 <Link
                   to="/features"
                   className={`block py-2 pr-4 pl-3 rounded lg:p-0 ${
-                    location.pathname === "/features" ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700" : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
+                    location.pathname === "/features"
+                      ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
+                      : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
                   }`}
                 >
                   Features
@@ -124,7 +132,9 @@ const Header = () => {
                 <Link
                   to="/team"
                   className={`block py-2 pr-4 pl-3 rounded lg:p-0 ${
-                    location.pathname === "/team" ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700" : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
+                    location.pathname === "/team"
+                      ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
+                      : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
                   }`}
                 >
                   Team
@@ -134,7 +144,9 @@ const Header = () => {
                 <Link
                   to="/contact"
                   className={`block py-2 pr-4 pl-3 rounded lg:p-0 ${
-                    location.pathname === "/contact" ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700" : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
+                    location.pathname === "/contact"
+                      ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
+                      : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
                   }`}
                 >
                   Contact

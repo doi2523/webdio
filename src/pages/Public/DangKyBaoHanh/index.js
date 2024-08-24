@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { database, auth } from "../../../Firebase/firebase";
-import { ref, set, get } from "firebase/database";
+import { database } from "../../../Firebase/firebase";
+import { ref, set, push, get } from "firebase/database";
+import Swal from "sweetalert2"; // Import SweetAlert
 
-function LocketGold() {
+function DangKyBaoHanh() {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     icloud: "",
   });
-
-  const [error, setError] = useState(""); // Trạng thái để hiển thị lỗi nếu thông tin đã tồn tại
-  const [success, setSuccess] = useState(""); // Trạng thái để hiển thị thông báo thành công
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,11 +21,18 @@ function LocketGold() {
   const saveData = async (path, data) => {
     try {
       await set(ref(database, path), data);
-      setSuccess("Thông tin đã được lưu thành công!");
-      setError(""); // Xóa lỗi nếu có thông báo thành công
+      Swal.fire({
+        icon: "success",
+        title: "Thành công!",
+        text: "Thông tin đã được lưu thành công!",
+      });
     } catch (error) {
       console.error("Error saving data:", error);
-      setError("Đã xảy ra lỗi khi lưu thông tin. Vui lòng thử lại sau.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Đã xảy ra lỗi khi lưu thông tin. Vui lòng thử lại sau.",
+      });
     }
   };
 
@@ -46,36 +51,65 @@ function LocketGold() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = auth.currentUser; // Giả sử người dùng đã đăng nhập
-    const uid = user?.uid;
 
-    if (!uid) {
-      setError("Không thể xác định người dùng. Vui lòng đăng nhập lại.");
+    const icloud = formData.icloud.trim();
+
+    if (!icloud) {
+      Swal.fire({
+        icon: "warning",
+        title: "Cảnh báo",
+        text: "Vui lòng nhập địa chỉ iCloud hợp lệ.",
+      });
       return;
     }
 
-    const userRef = ref(database, `locketGoldRequests/${uid}`);
+    // Tham chiếu tới vị trí dữ liệu trong Realtime Database
+    const userRef = ref(database, `DangKyBaoHanhRequests`);
 
     try {
+      // Lấy dữ liệu từ Realtime Database
       const snapshot = await get(userRef);
+      const data = snapshot.val();
 
-      if (snapshot.exists()) {
-        setError("Thông tin đã tồn tại trong cơ sở dữ liệu.");
-        setSuccess("");
-      } else {
-        // Tạo đối tượng chứa dữ liệu cần lưu
-        const dataToSave = {
-          ...formData,
-          timestamp: getCurrentDateTimeVN(), // Thời gian hiện tại định dạng Việt Nam
-          status: "kích hoạt", // Trạng thái "kích hoạt"
-        };
+      // Kiểm tra xem có địa chỉ iCloud nào trùng lặp không
+      const isDuplicate = Object.values(data || {}).some(
+        (item) => item.icloud === icloud
+      );
 
-        // Lưu dữ liệu vào Realtime Database nếu chưa có
-        saveData(`locketGoldRequests/${uid}`, dataToSave);
+      if (isDuplicate) {
+        Swal.fire({
+          icon: "warning",
+          title: "Cảnh báo",
+          text: "Địa chỉ iCloud này đã tồn tại.",
+        });
+        return;
       }
+
+      // Tạo đối tượng chứa dữ liệu cần lưu
+      const dataToSave = {
+        ...formData,
+        timestamp: getCurrentDateTimeVN(), // Thời gian hiện tại định dạng Việt Nam
+        status: "kích hoạt", // Trạng thái "kích hoạt"
+      };
+
+      // Tạo một khóa tự động từ Firebase
+      const newKey = push(userRef).key;
+
+      // Lưu dữ liệu vào Realtime Database với khóa tự tạo
+      await set(ref(database, `DangKyBaoHanhRequests/${newKey}`), dataToSave);
+
+      Swal.fire({
+        icon: "success",
+        title: "Thành công",
+        text: "Thông tin đã được lưu thành công.",
+      });
     } catch (error) {
       console.error("Error checking data:", error);
-      setError("Đã xảy ra lỗi khi kiểm tra thông tin. Vui lòng thử lại sau.");
+      Swal.fire({
+        icon: "error",
+        title: "Lỗi",
+        text: "Đã xảy ra lỗi khi kiểm tra thông tin. Vui lòng thử lại sau.",
+      });
     }
   };
 
@@ -104,8 +138,11 @@ function LocketGold() {
               name="name"
               value={formData.name}
               onChange={handleChange}
+              placeholder="Nhập tên của bạn"
               className="mt-1 block w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring focus:ring-indigo-300 focus:border-indigo-500 dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
               required
+              minLength={2}
+              maxLength={50}
             />
           </label>
 
@@ -118,8 +155,11 @@ function LocketGold() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
+              placeholder="Nhập số điện thoại của bạn"
               className="mt-1 block w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring focus:ring-indigo-300 focus:border-indigo-500 dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
               required
+              pattern="[0-9]{10,15}"
+              title="Số điện thoại phải từ 10 đến 15 chữ số"
             />
           </label>
 
@@ -132,14 +172,13 @@ function LocketGold() {
               name="icloud"
               value={formData.icloud}
               onChange={handleChange}
+              placeholder="Nhập địa chỉ iCloud của bạn"
               className="mt-1 block w-full px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring focus:ring-indigo-300 focus:border-indigo-500 dark:focus:ring-indigo-500 dark:focus:border-indigo-500"
               required
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              title="Địa chỉ email không hợp lệ"
             />
           </label>
-
-          {error && <p className="mt-2 text-red-500">{error}</p>}
-
-          {success && <p className="mt-2 text-green-500">{success}</p>}
 
           <button
             type="submit"
@@ -149,15 +188,17 @@ function LocketGold() {
           </button>
         </form>
       </div>
-      <hr></hr>
+      <hr />
       <div className="mt-4 text-center text-white my-2 w-full max-w-md p-4">
-          <hr className="mb-2"></hr>
-          <p className="text-sm text-gray-700 dark:text-gray-300">
-            Điền thông tin biểu mẫu này để có thể lưu trữ thông tin của bạn, tôi luôn bản mật thông tin khách hàng.
-          </p>
-        </div>
+        <hr className="mb-2" />
+        <p className="text-sm text-gray-700 dark:text-gray-300">
+          Điền thông tin biểu mẫu này để có thể lưu trữ thông tin của bạn, tôi
+          luôn bảo mật thông tin khách hàng. Lưu ý hãy nhập đúng thông tin vì
+          quyền lợi của bạn.
+        </p>
+      </div>
     </div>
   );
 }
 
-export default LocketGold;
+export default DangKyBaoHanh;

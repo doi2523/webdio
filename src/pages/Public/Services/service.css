@@ -1,0 +1,17 @@
+@keyframes point {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+}
+
+.pointing-animation {
+  animation: point 0.5s infinite;
+}
+.block-icon{
+  margin-top: 90px;
+  margin-left: 90px;
+}
