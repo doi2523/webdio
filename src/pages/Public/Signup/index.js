@@ -1,75 +1,23 @@
-import React, { useState } from "react";
-import {
-  auth,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  signOut,
-} from "../../../Firebase/firebase";
-import { getDatabase, ref, set } from "firebase/database"; // Import Realtime Database functions
+import React from 'react';
+import { useNavigate, Link } from "react-router-dom";
+import useSignup from '../../../hooks/useSignup'; // Đảm bảo đường dẫn đúng
 
 const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [termsAccepted, setTermsAccepted] = useState(false);
-  const [role, setRole] = useState("user"); // Thêm trạng thái để lưu vai trò
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-
-    if (password !== confirmPassword) {
-      setError("Mật khẩu không khớp.");
-      return;
-    }
-
-    if (!termsAccepted) {
-      setError("Bạn phải chấp nhận các điều khoản và điều kiện.");
-      return;
-    }
-
-    try {
-      // Tạo người dùng với email và mật khẩu
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-
-      console.log("User created:", user); // Debug log
-
-      // Gửi email xác minh
-      await sendEmailVerification(user);
-
-      console.log("Verification email sent"); // Debug log
-
-      // Lưu thông tin người dùng vào Realtime Database với uid là khóa chính
-      const db = getDatabase(); // Initialize Realtime Database
-      await set(ref(db, "users/" + user.uid), {
-        email: email,
-        createdAt: new Date().toISOString(), // Thời gian đăng ký tài khoản
-        role: role, // Vai trò của người dùng
-        lastLogin: null, // Thời gian đăng nhập lần cuối
-        lastLogout: null, // Thời gian đăng xuất lần cuối
-      });
-
-      // Đăng xuất người dùng ngay sau khi đăng ký
-      await signOut(auth);
-
-      console.log("User signed out"); // Debug log
-
-      setSuccess(
-        "Tạo tài khoản thành công! Vui lòng kiểm tra email của bạn để xác minh."
-      );
-    } catch (error) {
-      console.error("Error during signup:", error); // Debug log
-      setError(error.message);
-    }
-  };
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    confirmPassword,
+    setConfirmPassword,
+    termsAccepted,
+    setTermsAccepted,
+    role,
+    setRole,
+    error,
+    success,
+    handleSubmit,
+  } = useSignup();
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -165,12 +113,12 @@ const Signup = () => {
                     className="font-light text-gray-500 dark:text-gray-300"
                   >
                     Tôi chấp nhận{" "}
-                    <a
+                    <Link
                       className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                      href="#"
+                      to="#"
                     >
                       Các điều khoản và điều kiện
-                    </a>
+                    </Link>
                   </label>
                 </div>
               </div>
@@ -182,12 +130,12 @@ const Signup = () => {
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Đã có tài khoản?{" "}
-                <a
-                  href="/login"
+                <Link
+                  to="/login"
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Đăng nhập tại đây
-                </a>
+                </Link>
               </p>
             </form>
           </div>

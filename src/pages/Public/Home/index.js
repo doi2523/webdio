@@ -13,7 +13,7 @@ function Home() {
         </p>
         <div className="space-y-4">
           <Link to="/about">
-            <button className="px-6 py-3 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-400 transition duration-200">
+            <button className="px-6 mr-4 py-3 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-400 transition duration-200">
               Tìm Hiểu Thêm
             </button>
           </Link>

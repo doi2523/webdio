@@ -8,6 +8,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { getDatabase } from "firebase/database"; // Import Realtime Database
+import { getStorage } from 'firebase/storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -27,6 +28,7 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 const database = getDatabase(app); // Initialize Realtime Database
+const storage = getStorage(app);
 
 // Function to check email verification
 const checkEmailVerified = async () => {
@@ -41,6 +43,7 @@ const checkEmailVerified = async () => {
 export {
   auth,
   database,
+  storage,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendEmailVerification,

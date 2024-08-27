@@ -13,9 +13,9 @@ const Header = () => {
 
   return (
     <header>
-      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800 border-b">
+      <nav className="bg-white border-gray-200 border-b px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <Link to="/" className="flex items-center">
+          <Link to="auth/" className="flex items-center">
             <img
               src="https://flowbite.com/docs/images/logo.svg"
               className="mr-3 h-6 sm:h-9"
@@ -26,24 +26,12 @@ const Header = () => {
             </span>
           </Link>
           <div className="flex items-center lg:order-2">
-            <Link
-              to="/login"
-              className="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            >
-              Log in
-            </Link>
-            <Link
-              to="/get-started"
-              className="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
-            >
-              Get started
-            </Link>
             <button
               type="button"
               className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              aria-controls="mobile-menu"
+              aria-controls="mobile-menu-2"
               aria-expanded={openMobileMenu}
-              onClick={() => setOpenMobileMenu((prev) => !prev)}
+              onClick={() => setOpenMobileMenu(prev => !prev)}
             >
               <span className="sr-only">Open main menu</span>
               <svg
@@ -75,66 +63,65 @@ const Header = () => {
           <div
             className={`${
               openMobileMenu ? "block z-50" : "hidden"
-            } lg:flex lg:w-auto lg:order-1`}
-            id="mobile-menu"
+            } justify-between items-center w-full lg:flex lg:w-auto lg:order-1`}
+            id="mobile-menu-2"
           >
-            <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+            <ul className="flex flex-col mt-2 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
               <li>
                 <Link
-                  to="/"
-                  className={`block py-2 pr-4 pl-3 rounded lg:p-0 ${
-                    location.pathname === "/"
+                  to="/admin/"
+                  className={`block py-2 pr-4 pl-3 rounded lg:p-0 dark:text-white ${
+                    location.pathname === "/admin/"
                       ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
                       : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
                   }`}
-                  aria-current={location.pathname === "/" ? "page" : undefined}
                 >
                   Home
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/about"
-                  className={`block py-2 pr-4 pl-3 rounded lg:p-0 ${
-                    location.pathname === "/about"
+                  to="/admin/service"
+                  className={`block py-2 pr-4 pl-3 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white ${
+                    location.pathname === "/admin/service"
                       ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
                       : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
                   }`}
                 >
-                  About
+                  Service
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/services"
-                  className={`block py-2 pr-4 pl-3 rounded lg:p-0 ${
-                    location.pathname === "/services"
+                  to="/admin/marketplace"
+                  className={`block py-2 pr-4 pl-3 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white ${
+                    location.pathname === "/admin/marketplace"
                       ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
-                      : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
+                      : "text-gray-700"
                   }`}
                 >
-                  Services
+                  Marketplace
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/feedback"
-                  className={`block py-2 pr-4 pl-3 rounded lg:p-0 ${
-                    location.pathname === "/feedback"
+                  to="/admin/features"
+                  className={`block py-2 pr-4 pl-3 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white ${
+                    location.pathname === "/admin/features"
                       ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
-                      : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
+                      : "text-gray-700"
                   }`}
                 >
-                  Feedback
+                  Features
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/team"
-                  className={`block py-2 pr-4 pl-3 rounded lg:p-0 ${
-                    location.pathname === "/team"
+                  to="/admin/team"
+                  className={`block py-2 pr-4 pl-3 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white ${
+                    location.pathname === "/admin/team"
                       ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
-                      : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
+                      : "text-gray-700"
                   }`}
                 >
                   Team
@@ -142,14 +129,26 @@ const Header = () => {
               </li>
               <li>
                 <Link
-                  to="/contact"
-                  className={`block py-2 pr-4 pl-3 rounded lg:p-0 ${
-                    location.pathname === "/contact"
+                  to="/admin/contact"
+                  className={`block py-2 pr-4 pl-3 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white ${
+                    location.pathname === "/admin/contact"
                       ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
-                      : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
+                      : "text-gray-700"
                   }`}
                 >
                   Contact
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/admin/profile"
+                  className={`block py-2 pr-4 pl-3 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white ${
+                    location.pathname === "/admin/profile"
+                      ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
+                      : "text-gray-700"
+                  }`}
+                >
+                  Profile
                 </Link>
               </li>
             </ul>

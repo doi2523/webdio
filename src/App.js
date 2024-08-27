@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { publicRoutes, privateRoutes } from './Routes';
+import { publicRoutes, privateRoutes, adminRoutes } from './Routes';
 import { AuthProvider, useAuth } from './AuthContext';
-import AuthHeader from './components/Auth/Header';
-import Header from './components/Default/Header';
-import Footer from './components/Default/Footer';
+import DefaultLayout from './layouts/DefaultLayout';
+import AuthLayout from './layouts/AuthLayout';
+import AdminLayout from './layouts/AdminLayout';
 import Loading from './components/Loading';
 import PrivateRoute from './PrivateRoute';
 import RedirectIfLoggedIn from './RedirectIfLoggedIn';
@@ -13,29 +13,14 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <HeaderWrapper />
         <PageWrapper />
-        <Footer />
       </Router>
     </AuthProvider>
   );
 }
 
-const HeaderWrapper = () => {
-  const { user, loading, isVerified } = useAuth();
-
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (user && isVerified) {
-    return <AuthHeader />;
-  } 
-
-  return <Header />;
-};
-
 const PageWrapper = () => {
+  const { user, loading, role } = useAuth(); // Thêm 'role' vào từ context
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
@@ -43,19 +28,27 @@ const PageWrapper = () => {
     setIsLoading(true);
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 500); // Thời gian hiển thị trang Loading, có thể tùy chỉnh
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [location.pathname]);
 
-  if (isLoading) {
+  if (loading || isLoading) {
     return <Loading />;
   }
 
+  let Layout;
+  if (!user) {
+    Layout = DefaultLayout;
+  } else if (role === 'admin') {
+    Layout = AdminLayout;
+  } else {
+    Layout = AuthLayout;
+  }
+
   return (
-    <div className='App'>
+    <Layout>
       <Routes>
-        {/* Render public routes */}
         {publicRoutes.map((route, index) => {
           const Page = route.component;
           return (
@@ -71,7 +64,6 @@ const PageWrapper = () => {
           );
         })}
 
-        {/* Render private routes */}
         {privateRoutes.map((route, index) => {
           const Page = route.component;
           return (
@@ -83,23 +75,27 @@ const PageWrapper = () => {
                   <Page />
                 </PrivateRoute>
               }
-            >
-              {route.children &&
-                route.children.map((child, childIndex) => {
-                  const ChildPage = child.component;
-                  return (
-                    <Route
-                      key={childIndex}
-                      path={child.path}
-                      element={<ChildPage />}
-                    />
-                  );
-                })}
-            </Route>
+            />
           );
         })}
+
+        {role === 'admin' &&
+          adminRoutes.map((route, index) => {
+            const Page = route.component;
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <PrivateRoute>
+                    <Page />
+                  </PrivateRoute>
+                }
+              />
+            );
+          })}
       </Routes>
-    </div>
+    </Layout>
   );
 };
 

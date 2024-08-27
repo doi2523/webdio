@@ -88,19 +88,19 @@ const AuthHeader = () => {
                       : "text-gray-700 lg:text-gray-700 dark:text-gray-400"
                   }`}
                 >
-                  Service
+                  Services
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/auth/marketplace"
+                  to="/auth/feedback"
                   className={`block py-2 pr-4 pl-3 rounded bg-primary-700 lg:bg-transparent lg:text-primary-700 lg:p-0 dark:text-white ${
-                    location.pathname === "/auth/marketplace"
+                    location.pathname === "/auth/feedback"
                       ? "text-white bg-blue-700 lg:bg-transparent lg:text-blue-700"
                       : "text-gray-700"
                   }`}
                 >
-                  Marketplace
+                  Feedback
                 </Link>
               </li>
               <li>

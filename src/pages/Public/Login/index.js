@@ -1,55 +1,20 @@
-import React, { useState } from "react";
-import { auth, signInWithEmailAndPassword } from "../../../Firebase/firebase";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import React from "react";
+import { useNavigate, Link } from "react-router-dom";
+import useLogin from "../../../hooks/useLogin";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const navigate = useNavigate(); // Khai báo useNavigate
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-
-      // Kiểm tra xem email đã được xác minh chưa
-      if (!user.emailVerified) {
-        throw new Error("Vui lòng xác minh email của bạn trước khi đăng nhập.");
-      }
-
-      setSuccess("Đăng nhập thành công!");
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        },
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Đăng nhập thành công",
-      });
-      navigate("/auth/"); // Chuyển hướng sau khi đăng nhập thành công
-    } catch (error) {
-      setError(error.message);
-    }
-  };
+  const navigate = useNavigate();
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    rememberMe,
+    setRememberMe,
+    error,
+    success,
+    handleSubmit,
+  } = useLogin();
 
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
@@ -70,9 +35,12 @@ const Login = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Đăng nhập
             </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-              {error && <p className="text-red-500">{error}</p>}
-              {success && <p className="text-green-500">{success}</p>}
+            <form
+              className="space-y-4 md:space-y-6"
+              onSubmit={(e) => handleSubmit(e, navigate)}
+            >
+              {/* {error && <p className="text-red-500">{error}</p>}
+              {success && <p className="text-green-500">{success}</p>} */}
               <div>
                 <label
                   htmlFor="email"
@@ -130,12 +98,12 @@ const Login = () => {
                     </label>
                   </div>
                 </div>
-                <a
-                  href="#"
+                <Link
+                  to="/forgot-password" // Đường dẫn đến trang quên mật khẩu
                   className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Quên mật khẩu?
-                </a>
+                </Link>
               </div>
               <button
                 type="submit"
@@ -145,12 +113,12 @@ const Login = () => {
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Chưa có tài khoản?{" "}
-                <a
-                  href="/get-started"
+                <Link
+                  to="/get-started" // Đường dẫn điều hướng
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
                   Đăng ký ngay
-                </a>
+                </Link>
               </p>
             </form>
           </div>

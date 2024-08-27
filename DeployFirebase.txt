@@ -1,0 +1,2 @@
+Deploy Hosting: https://webdio.web.app/
+firebase deploy --only hosting:webdio
