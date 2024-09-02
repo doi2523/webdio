@@ -20,7 +20,7 @@ function App() {
 }
 
 const PageWrapper = () => {
-  const { user, loading, role } = useAuth(); // Thêm 'role' vào từ context
+  const { user, loading, role, isVerified } = useAuth(); // Thêm 'role' vào từ context
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
 
@@ -38,7 +38,12 @@ const PageWrapper = () => {
   }
 
   let Layout;
+
   if (!user) {
+    Layout = DefaultLayout;
+  } else if (!isVerified) {
+    // Hiển thị layout yêu cầu xác minh email
+    // Layout = AuthLayout;
     Layout = DefaultLayout;
   } else if (role === 'admin') {
     Layout = AdminLayout;

@@ -1,10 +1,9 @@
-// src/hooks/useLogin.js
-
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../Firebase/firebase"; // Đảm bảo đường dẫn đúng
+import { auth, database } from "../../Firebase/firebase"; // Đảm bảo đường dẫn đúng
 import Swal from "sweetalert2";
 import { getErrorMessage } from "../useError";
+import { ref, get } from "firebase/database";
 
 const useLogin = () => {
   const [email, setEmail] = useState("");
@@ -19,17 +18,24 @@ const useLogin = () => {
     setSuccess("");
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
       // Kiểm tra xem email đã được xác minh chưa
       if (!user.emailVerified) {
         throw new Error("Vui lòng xác minh email của bạn trước khi đăng nhập.");
       }
+
+      // Lấy thông tin vai trò của người dùng từ Realtime Database
+      const userRef = ref(database, `users/${user.uid}`);
+      const userSnap = await get(userRef);
+
+      if (!userSnap.exists()) {
+        throw new Error("Không tìm thấy thông tin người dùng.");
+      }
+
+      const userData = userSnap.val();
+      const role = userData.role; // Giả sử thông tin vai trò được lưu trong trường 'role'
 
       setSuccess("Đăng nhập thành công!");
 
@@ -41,7 +47,6 @@ const useLogin = () => {
         timer: 3000,
         timerProgressBar: true,
         didOpen: (toast) => {
-          // toast.onmouseenter = Swal.stopTimer;
           toast.onmouseleave = Swal.resumeTimer;
         }
       });
@@ -50,16 +55,24 @@ const useLogin = () => {
         title: "Login in successfully"
       });
 
-      // Chuyển hướng sau khi đăng nhập thành công
-      // navigate('/auth');
+      // Chuyển hướng dựa trên vai trò
+      if (role === "admin") {
+        navigate("/admin");
+      } else if (role === "user") {
+        navigate("/auth");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
+      console.error("Lỗi đăng nhập:", error); // Log lỗi để kiểm tra
       const errorMessage = getErrorMessage(error.code); // Sử dụng hàm xử lý lỗi
 
       setError(errorMessage);
       Swal.fire({
         icon: "error",
         title: "Đăng nhập thất bại",
-        text: errorMessage,
+        // text: errorMessage,
+        text: error,
       });
     }
   };

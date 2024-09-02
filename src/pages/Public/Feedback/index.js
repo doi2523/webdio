@@ -95,6 +95,7 @@ const Feedback = () => {
         likes: 0,
         shares: 0,
         likedBy: [],
+        tag: "locketgold",
       };
 
       await push(dbRef(database, "feedbacks"), newFeedback);

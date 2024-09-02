@@ -69,7 +69,8 @@ const useSignup = () => {
       Swal.fire({
         icon: 'error',
         title: 'Đăng ký thất bại',
-        text: errorMessage,
+        // text: errorMessage,
+        text: error,
       });
     }
   };

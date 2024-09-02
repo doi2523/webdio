@@ -5,7 +5,12 @@ const FeedbackItem = ({ feedback, onLike, onComment, onShare, formatDate, user }
   const hasLiked = (likedBy) => user && Array.isArray(likedBy) && likedBy.includes(user.uid);
 
   return (
-    <div className="border p-4 rounded-md shadow-sm">
+    <div className="relative border p-4 rounded-md shadow-sm">
+      {/* Thẻ tag locketgold */}
+      <div className="absolute top-2 right-2 bg-yellow-100 text-yellow-800 p-1 rounded-lg text-sm font-semibold">
+        #locketgold💛
+      </div>
+
       <p className="font-bold">{feedback.name}</p>
       <p>{feedback.content}</p>
       {feedback.image && (
