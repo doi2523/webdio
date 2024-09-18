@@ -4,6 +4,7 @@ import FeedbackItem from '../FeedbackRespontive';
 const FeedbackList = ({ feedbacks, onLike, onComment, onShare, formatDate, user }) => {
   return (
     <div className="w-full max-w-3xl bg-white shadow-md rounded-lg p-6 mb-4 dark:bg-gray-800 dark:text-gray-100">
+      <div className="h-10" />
       <h1 className="text-2xl font-bold mb-4">Phản hồi của người dùng</h1>
       <div className="space-y-4">
         {feedbacks.length === 0 ? (

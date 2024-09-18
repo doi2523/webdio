@@ -267,7 +267,7 @@ export const CancelIcon = (props) => (
     />
   </svg>
 );
-export const InstagramIcon = () => (
+export const InstagramIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -307,7 +307,7 @@ export const InstagramIcon = () => (
     ></path>
   </svg>
 );
-export const FacebookIcon = () => (
+export const FacebookIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -328,7 +328,7 @@ export const FacebookIcon = () => (
     />
   </svg>
 );
-export const ZaloIcon = () => (
+export const ZaloIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -377,7 +377,7 @@ export const ZaloIcon = () => (
     />
   </svg>
 );
-export const TelegramIcon = () => {
+export const TelegramIcon = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -396,7 +396,7 @@ export const TelegramIcon = () => {
     </svg>
   );
 };
-export const AddIcon = () => (
+export const AddIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -421,7 +421,7 @@ export const AddIcon = () => (
     />
   </svg>
 );
-export const CancelIconV2 = () => (
+export const CancelIconV2 = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="30"

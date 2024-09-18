@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Header from "../../components/Default/Header"
+import DefaultHeader from "../../components/Default/Header"
 import Footer from "../../components/Default/Footer"
 
 const DefaultLayout = ({ children }) => {
   return (
     <>
-      <Header />
+      <DefaultHeader />
       <div>{children}</div>
       <Footer />
     </>

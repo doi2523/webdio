@@ -12,6 +12,7 @@ const Service = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 dark:bg-gray-900 pt-16">
+      <div className="h-10" />{/*  bắt buộc có để cách header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
           My Services

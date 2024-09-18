@@ -8,17 +8,19 @@ import AdminLayout from './layouts/AdminLayout';
 import Loading from './components/Loading';
 import PrivateRoute from './PrivateRoute';
 import RedirectIfLoggedIn from './RedirectIfLoggedIn';
+import ScrollControl from './hooks/ScrollControl';
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-        <PageWrapper />
+        <ScrollControl>
+          <PageWrapper />
+        </ScrollControl>
       </Router>
     </AuthProvider>
   );
 }
-
 const PageWrapper = () => {
   const { user, loading, role, isVerified } = useAuth(); // Thêm 'role' vào từ context
   const [isLoading, setIsLoading] = useState(true);

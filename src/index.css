@@ -11,6 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.content-container {
+  padding-top: 80px; /* Thay đổi giá trị này để phù hợp với chiều cao của header */
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
