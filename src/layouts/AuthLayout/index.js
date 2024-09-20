@@ -1,7 +1,7 @@
 import React from 'react';
 
-import AuthHeader from '../../components/Auth/Header';
-import Footer from '../../components/Auth/Footer';
+import AuthHeader from '../../components/Auth/AuthHeader';
+import Footer from '../../components/Auth/AuthFooter';
 
 const AuthLayout = ({ children }) => {
     return (

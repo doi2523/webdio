@@ -14,7 +14,7 @@ const Footer = () => {
                 alt="FlowBite Logo"
               />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                WEBDIO
+              𝓦𝓮𝓫𝓭𝓲𝓸
               </span>
             </a>
           </div>

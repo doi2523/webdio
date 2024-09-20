@@ -1,0 +1,21 @@
+.circle {
+    width: 130px; /* Kích thước của vòng tròn */
+    height: 130px;
+    border: 3px dashed #347eff; /* Màu sắc của vòng tròn nét đứt */
+    border-radius: 50%;
+    animation: spin 5s linear infinite; /* Quay vòng tròn */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Thêm bóng cho vòng tròn */
+  }
+  
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
