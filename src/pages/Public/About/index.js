@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { IconTickBlue } from "../../../Icons";
-import "./styles.css"
+import { ExchangeIcon, IconTickBlue } from "../../../Icons";
+import "./styles.css";
 
 const About = () => {
   const [language, setLanguage] = useState("en"); // Trạng thái ngôn ngữ
@@ -33,7 +33,7 @@ const About = () => {
           {/* Nút đổi ngôn ngữ */}
           <button
             onClick={toggleLanguage}
-            className="fixed bottom-4 right-4 px-4 py-2 bg-gray-800 text-white rounded-lg shadow hover:bg-gray-700"
+            className="fixed bottom-4 right-4 px-4 py-2 bg-gray-800 text-white rounded-lg shadow hover:bg-gray-700 bg-opacity-50 backdrop-blur-lg"
           >
             {language === "en" ? "🇻🇳Tiếng Việt" : "🇬🇧English"}
           </button>
@@ -41,13 +41,17 @@ const About = () => {
           {/* Grid để chia bố cục thành 2 nửa trên màn hình lớn */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Nửa trái: Avatar và giới thiệu */}
-            <div className="text-center md:text-left flex flex-col items-center md:items-start">
-            <div className="circle absolute" />
+            <div className="text-center md:text-left flex flex-col items-center md:items-start relative">
+              <div className="circle absolute" />
+              {/* <button className="exchange absolute z-30 ml-10">
+                <ExchangeIcon />
+              </button> */}
               <img
                 src={images[currentImageIndex]}
                 alt="Van Doi Avatar"
                 className="w-32 h-32 relative z-10 rounded-full mb-4 shadow-lg shadow-gray-500/70 transition-transform duration-700 transform rotate-y-180"
                 style={{ transform: `rotateY(${currentImageIndex * 180}deg)` }}
+                draggable="false"
               />
               <h2 className="text-2xl font-semibold mb-2">
                 {language === "en" ? "Dao Van Doi (Dio)" : "Đào Văn Đôi (Dio)"}
@@ -69,7 +73,6 @@ const About = () => {
                 >
                   <i className="fab fa-facebook fa-2x"></i>
                 </a>
-
                 <a
                   href="https://instagram.com/_am.dio"
                   target="_blank"
@@ -78,7 +81,6 @@ const About = () => {
                 >
                   <i className="fab fa-instagram fa-2x"></i>
                 </a>
-
                 <a
                   href="https://github.com/doi2523"
                   target="_blank"
