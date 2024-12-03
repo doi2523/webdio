@@ -4,7 +4,7 @@ import "./styles.css";
 
 const About = () => {
   const [language, setLanguage] = useState("en"); // Trạng thái ngôn ngữ
-
+  const [isLoaded, setIsLoaded] = useState(false);
   const toggleLanguage = () => {
     setLanguage((prev) => (prev === "en" ? "vi" : "en"));
   };
@@ -16,11 +16,24 @@ const About = () => {
     "images/picab/4.png",
     "images/picab/5.png",
   ];
+  useEffect(() => {
+    // Thiết lập một lắng nghe cho sự kiện window.onload
+    const handleLoad = () => {
+      setIsLoaded(true);
+    };
 
+    // Lắng nghe sự kiện khi trang tải xong
+    window.addEventListener("load", handleLoad);
+
+    return () => {
+      // Dọn dẹp sự kiện khi component unmount
+      window.removeEventListener("load", handleLoad);
+    };
+  }, []);
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(interval); // Dọn dẹp interval khi component unmount
   }, [images.length]);
@@ -43,13 +56,11 @@ const About = () => {
             {/* Nửa trái: Avatar và giới thiệu */}
             <div className="text-center md:text-left flex flex-col items-center md:items-start relative">
               <div className="circle absolute" />
-              {/* <button className="exchange absolute z-30 ml-10">
-                <ExchangeIcon />
-              </button> */}
+              {/* <span className="loading loading-spinner loading-md absolute z-30"></span> */}
               <img
                 src={images[currentImageIndex]}
                 alt="Van Doi Avatar"
-                className="w-32 h-32 relative z-10 rounded-full mb-4 shadow-lg shadow-gray-500/70 transition-transform duration-700 transform rotate-y-180"
+                className="w-32 h-32 relative z-10 rounded-full mb-4 shadow-gray-500/70 transition-transform duration-700 transform"
                 style={{ transform: `rotateY(${currentImageIndex * 180}deg)` }}
                 draggable="false"
               />

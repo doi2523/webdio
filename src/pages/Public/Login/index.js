@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react"; // Import useState
 import { useNavigate, Link } from "react-router-dom";
 import useLogin from "../../../hooks/useLogin";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false); // State để theo dõi trạng thái loading
   const {
     email,
     setEmail,
@@ -16,10 +17,17 @@ const Login = () => {
     handleSubmit,
   } = useLogin();
 
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault(); // Ngăn chặn hành vi mặc định của form
+    setIsLoading(true); // Bắt đầu trạng thái loading
+    await handleSubmit(e, navigate); // Gọi hàm handleSubmit
+    setIsLoading(false); // Kết thúc trạng thái loading
+  };
+
   return (
-<section className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-<div className="h-10" />{/*  bắt buộc có để cách header */}
-<div className="w-full flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <section className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="h-10" />{/*  bắt buộc có để cách header */}
+      <div className="w-full flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <a
           href="#"
           className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
@@ -38,7 +46,7 @@ const Login = () => {
             </h1>
             <form
               className="space-y-4 md:space-y-6"
-              onSubmit={(e) => handleSubmit(e, navigate)}
+              onSubmit={handleLoginSubmit} // Sử dụng hàm handleLoginSubmit
             >
               {/* {error && <p className="text-red-500">{error}</p>}
               {success && <p className="text-green-500">{success}</p>} */}
@@ -108,9 +116,16 @@ const Login = () => {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full flex items-center justify-center text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
-                Đăng nhập
+                {isLoading ? (
+                  <>
+                    <span className="loading loading-ring loading-sm mr-2"></span>
+                    Đang đăng nhập...
+                  </>
+                ) : (
+                  "Đăng nhập"
+                )}
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Chưa có tài khoản?{" "}

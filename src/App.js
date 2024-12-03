@@ -9,6 +9,8 @@ import Loading from './components/Loading';
 import PrivateRoute from './PrivateRoute';
 import RedirectIfLoggedIn from './RedirectIfLoggedIn';
 import ScrollControl from './hooks/ScrollControl';
+import UpgradeLayout from './layouts/UpgradeLayout';
+import PageNotFound from './pages/Public/PageNotFound';
 
 function App() {
   return (
@@ -21,31 +23,32 @@ function App() {
     </AuthProvider>
   );
 }
+
 const PageWrapper = () => {
-  const { user, loading, role, isVerified } = useAuth(); // Thêm 'role' vào từ context
-  const [isLoading, setIsLoading] = useState(true);
+  const { user, loading, role, isVerified } = useAuth();
+  const [isInitialLoading, setIsInitialLoading] = useState(true); // Kiểm tra lần tải đầu tiên
   const location = useLocation();
 
   useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
+    if (isInitialLoading) {
+      setTimeout(() => {
+        setIsInitialLoading(false);
+      }, 500); // Hiển thị trang loading trong lần tải đầu tiên
+    }
+  }, []);
 
-    return () => clearTimeout(timer);
-  }, [location.pathname]);
-
-  if (loading || isLoading) {
+  if (loading || isInitialLoading) {
     return <Loading />;
   }
 
   let Layout;
 
-  if (!user) {
+  // Kiểm tra nếu địa chỉ bắt đầu bằng '/upgrade'
+  if (location.pathname.startsWith('/upgrade')) {
+    Layout = UpgradeLayout; // Giả sử bạn đã tạo layout UpgradeLayout
+  } else if (!user) {
     Layout = DefaultLayout;
   } else if (!isVerified) {
-    // Hiển thị layout yêu cầu xác minh email
-    // Layout = AuthLayout;
     Layout = DefaultLayout;
   } else if (role === 'admin') {
     Layout = AdminLayout;
@@ -101,6 +104,9 @@ const PageWrapper = () => {
               />
             );
           })}
+
+        {/* Route 404 cho các đường dẫn không tồn tại */}
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Layout>
   );

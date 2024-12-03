@@ -1,0 +1,42 @@
+[debug] [2024-12-03T16:01:59.931Z] ----------------------------------------------------------------------
+[debug] [2024-12-03T16:01:59.937Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only hosting:webdio
+[debug] [2024-12-03T16:01:59.937Z] CLI Version:   13.20.1
+[debug] [2024-12-03T16:01:59.937Z] Platform:      darwin
+[debug] [2024-12-03T16:01:59.937Z] Node Version:  v20.16.0
+[debug] [2024-12-03T16:01:59.938Z] Time:          Tue Dec 03 2024 23:01:59 GMT+0700 (Indochina Time)
+[debug] [2024-12-03T16:01:59.938Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-12-03T16:01:59.944Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2024-12-03T16:02:00.155Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-12-03T16:02:00.156Z] > authorizing via signed-in user (nguyentiendatpaypal@gmail.com)
+[debug] [2024-12-03T16:02:00.156Z] [iam] checking project webdio-20ca8 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-12-03T16:02:00.157Z] Checked if tokens are valid: false, expires at: 1728037286338
+[debug] [2024-12-03T16:02:00.157Z] Checked if tokens are valid: false, expires at: 1728037286338
+[debug] [2024-12-03T16:02:00.158Z] > refreshing access token with scopes: []
+[debug] [2024-12-03T16:02:00.159Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2024-12-03T16:02:00.159Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-12-03T16:02:00.524Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2024-12-03T16:02:00.524Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-12-03T16:02:00.583Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/webdio-20ca8:testIamPermissions [none]
+[debug] [2024-12-03T16:02:00.583Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/webdio-20ca8:testIamPermissions x-goog-quota-user=projects/webdio-20ca8
+[debug] [2024-12-03T16:02:00.584Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/webdio-20ca8:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-12-03T16:02:00.736Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2024-12-03T16:02:00.737Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2024-12-03T16:02:01.880Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/webdio-20ca8:testIamPermissions 200
+[debug] [2024-12-03T16:02:01.881Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/webdio-20ca8:testIamPermissions {}
+[debug] [2024-12-03T16:02:01.881Z] [iam] error while checking permissions, command may fail: FirebaseError: Authorization failed. This account is missing the following required permissions on project webdio-20ca8:
+
+  firebase.projects.get
+  firebasehosting.sites.update
+[debug] [2024-12-03T16:02:01.883Z] Checked if tokens are valid: true, expires at: 1733245319525
+[debug] [2024-12-03T16:02:01.883Z] Checked if tokens are valid: true, expires at: 1733245319525
+[debug] [2024-12-03T16:02:01.883Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/webdio-20ca8 [none]
+[debug] [2024-12-03T16:02:02.522Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/webdio-20ca8 403
+[debug] [2024-12-03T16:02:02.523Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/webdio-20ca8 {"error":{"code":403,"message":"The caller does not have permission","status":"PERMISSION_DENIED"}}
+[debug] [2024-12-03T16:02:02.524Z] HTTP Error: 403, The caller does not have permission
+[debug] [2024-12-03T16:02:02.866Z] FirebaseError: HTTP Error: 403, The caller does not have permission
+    at responseToError (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:49:12)
+    at RetryOperation._fn (/usr/local/lib/node_modules/firebase-tools/lib/apiv2.js:312:77)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[error] 
+[error] Error: Failed to get Firebase project webdio-20ca8. Please make sure the project exists and your account has permission to access it.

@@ -12,7 +12,7 @@ const AdminHeader = () => {
   }, [location.pathname]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white border-gray-200 border-b px-4 lg:px-6 py-2.5 dark:bg-gray-800 dark:border-gray-700">
+    <header className="fixed top-0 left-0 right-0 z-50 dark:shadow-none bg-white border-gray-200 border-b px-4 lg:px-6 py-2.5 dark:bg-gray-800 dark:border-gray-700">
       <nav className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
         <Link to="/auth/" className="flex items-center">
           <img

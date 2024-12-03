@@ -1,0 +1,17 @@
+.wave {
+    position: absolute;
+    bottom: 0; /* Đặt ở dưới cùng */
+    width: 100%;
+    height: 100px; /* Chiều cao của sóng */
+    animation: wave-animation 10s infinite linear; /* Hiệu ứng chạy sóng */
+  }
+  
+  @keyframes wave-animation {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  

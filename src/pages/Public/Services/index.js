@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { HandPointingLeftIcon } from "../../../Icons";
 import "./service.css";
 
@@ -11,7 +11,7 @@ const Service = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 dark:bg-gray-900 pt-16">
+    <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 dark:bg-gray-900 pt-10">
       <div className="h-10" />{/*  bắt buộc có để cách header */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-4">
@@ -80,6 +80,27 @@ const Service = () => {
             >
               Tìm hiểu thêm
             </button>
+            <div className="ml-4 mr-6 pointing-animation">
+              <HandPointingLeftIcon />
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+            Đăng ký iCloud
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">
+            Đăng ký và sử dụng các gói iCloud 50GB, 200GB, 2TB...
+          </p>
+          <div className="mt-4 flex items-center">
+            <Link
+            to="/upgrade/icloud"
+              // onClick={() => handleLearnMoreClick("upgrade/icloud")}
+              className="px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-400 transition-colors duration-200"
+            >
+              Tìm hiểu thêm
+            </Link>
             <div className="ml-4 mr-6 pointing-animation">
               <HandPointingLeftIcon />
             </div>

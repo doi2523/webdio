@@ -123,6 +123,8 @@ const Guide = () => {
   }
   return (
     <>
+          {/* Tạo phần tử để cách header */}
+          <div className="h-10" />
       <div className="relative w-full max-w-md mx-auto bg-gray-800 p-11 shadow-lg">
         <h1 className="text-2xl font-bold text-white mb-4 text-center">
           Hướng Dẫn

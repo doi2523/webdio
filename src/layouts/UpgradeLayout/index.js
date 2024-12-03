@@ -4,10 +4,11 @@ import DefaultHeader from "../../components/Default/DefaultHeader"
 import Footer from "../../components/Default/DefaultFooter"
 import BottomNavigation from '../../components/Default/BottomNavigation';
 
-const DefaultLayout = ({ children }) => {
+const UpgradeLayout = ({ children }) => {
   return (
     <>
-      <DefaultHeader />
+    <DefaultHeader/>
+      <BottomNavigation />
       <div>{children}</div>
       {/* <BottomNavigation/> */}
       <Footer />
@@ -15,4 +16,4 @@ const DefaultLayout = ({ children }) => {
   );
 };
 
-export default DefaultLayout;
+export default UpgradeLayout;
